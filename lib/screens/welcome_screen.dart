@@ -6,48 +6,95 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.build, color: Colors.blue, size: 50),
-            const SizedBox(height: 20),
-            const Text(
-              "TECHNI",
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              "Your Local Experts, On-Demand",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.blue),
-            ),
-            const SizedBox(height: 40),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: [
+              const SizedBox(height: 40),
 
-            /// Illustration Space
-            Container(
-              height: 200,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(16),
+              /// LOGO (SVG)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/images/image 1.png', height: 32),
+                  const SizedBox(width: 10),
+                ],
               ),
-              child: const Center(child: Text("Add Illustration Here")),
-            ),
 
-            const SizedBox(height: 40),
+              const SizedBox(height: 30),
 
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/signin');
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 55),
+              const Text(
+                "Your Local Experts, On-Demand",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF2F6BFF),
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-              child: const Text("Get Started"),
-            ),
-          ],
+
+              const SizedBox(height: 12),
+
+              const Text(
+                "Connect with trusted plumbers,\nelectricians, and more in minutes.",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14, color: Colors.grey),
+              ),
+
+              const Spacer(),
+
+              /// Illustration Image
+              Image.asset('assets/images/background.png', height: 220),
+
+              const Spacer(),
+
+              /// Get Started Button
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/signin');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF2F6BFF),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  child: const Text(
+                    "Get Started",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              /// Login Text
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Already have an account? "),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/signin');
+                    },
+                    child: const Text(
+                      "Log in",
+                      style: TextStyle(
+                        color: Color(0xFF2F6BFF),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 30),
+            ],
+          ),
         ),
       ),
     );
