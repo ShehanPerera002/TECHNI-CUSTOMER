@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/welcome_screen.dart';
-/*mport 'screens/sign_in_screen.dart';
+/*import 'screens/sign_in_screen.dart';
 import 'screens/verification_screen.dart';
 import 'screens/success_screen.dart';
 import 'screens/create_profile_screen.dart';*/

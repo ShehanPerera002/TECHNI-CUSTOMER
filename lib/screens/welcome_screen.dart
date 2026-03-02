@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../core/assets.dart';
+import '../widgets/primary_button.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -6,94 +8,90 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            children: [
-              const SizedBox(height: 40),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            child: Column(
+              children: [
+                const SizedBox(height: 30),
 
-              /// LOGO (SVG)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('assets/images/image 1.png', height: 32),
-                  const SizedBox(width: 10),
-                ],
-              ),
-
-              const SizedBox(height: 30),
-
-              const Text(
-                "Your Local Experts, On-Demand",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Color(0xFF2F6BFF),
-                  fontWeight: FontWeight.w600,
+                // LOGO
+                Image.asset(
+                  AppAssets.welcomeLogo,
+                  height: 200,
+                  fit: BoxFit.contain,
                 ),
-              ),
 
-              const SizedBox(height: 12),
+                const SizedBox(height: 8),
 
-              const Text(
-                "Connect with trusted plumbers,\nelectricians, and more in minutes.",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14, color: Colors.grey),
-              ),
+                // MAIN TAGLINE
+                const Text(
+                  "Your Local Experts, On-Demand",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF2563EB),
+                    height: 1.2,
+                  ),
+                ),
 
-              const Spacer(),
+                const SizedBox(height: 15),
 
-              /// Illustration Image
-              Image.asset('assets/images/background.png', height: 220),
+                // DESCRIPTION
+                const Text(
+                  "Connec with trusted plumbers, electricians, and more in minutes.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black54,
+                    height: 1.5,
+                  ),
+                ),
 
-              const Spacer(),
+                const SizedBox(height: 50), // Fixed spacing instead of Spacer
+                // MAIN ILLUSTRATION
+                Image.asset(
+                  AppAssets.welcomePage,
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  fit: BoxFit.contain,
+                ),
 
-              /// Get Started Button
-              SizedBox(
-                width: double.infinity,
-                height: 55,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/signin');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF2F6BFF),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+                const SizedBox(height: 30),
+
+                // BUTTON
+                PrimaryButton(
+                  text: "Get Started",
+                  onPressed: () => Navigator.pushNamed(context, '/signin'),
+                ),
+
+                const SizedBox(height: 20),
+
+                // LOGIN ROW
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Already have an account? ",
+                      style: TextStyle(color: Colors.black87),
                     ),
-                  ),
-                  child: const Text(
-                    "Get Started",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              /// Login Text
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Already have an account? "),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/signin');
-                    },
-                    child: const Text(
-                      "Log in",
-                      style: TextStyle(
-                        color: Color(0xFF2F6BFF),
-                        fontWeight: FontWeight.w600,
+                    GestureDetector(
+                      onTap: () => Navigator.pushNamed(context, '/signin'),
+                      child: const Text(
+                        "Login",
+                        style: TextStyle(
+                          color: Color(0xFF2563EB),
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 30),
-            ],
+                  ],
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),
