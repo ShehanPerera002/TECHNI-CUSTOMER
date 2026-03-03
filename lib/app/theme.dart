@@ -4,5 +4,5 @@ final ThemeData appTheme = ThemeData(
   useMaterial3: true,
   fontFamily: 'Roboto',
   colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2563EB)),
-  scaffoldBackgroundColor: Colors.white,
+  scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
 );
