@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/create_profile_screen.dart';
 
 class SuccessCard extends StatelessWidget {
   const SuccessCard({super.key});
@@ -26,7 +27,14 @@ class SuccessCard extends StatelessWidget {
           Align(
             alignment: Alignment.topRight,
             child: GestureDetector(
-              onTap: () => Navigator.pop(context),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CreateProfileScreen(),
+                  ),
+                );
+              },
               child: const Icon(Icons.close, size: 24, color: Colors.black87),
             ),
           ),
