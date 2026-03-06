@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../core/assets.dart';
 
@@ -11,6 +13,19 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
+  final PageController _carouselController = PageController();
+  Timer? _carouselTimer;
+
+  static const List<_CarouselSlide> _carouselSlides = [
+    _CarouselSlide(Icons.bolt, "Emergency Support", "Need urgent help? Get a professional at your door in one tap.", "24/7"),
+    _CarouselSlide(Icons.star, "Top Rated Pros", "Book verified experts with 4.8+ ratings.", "Popular"),
+    _CarouselSlide(Icons.savings, "Best Prices", "Transparent pricing with no hidden fees.", "Save"),
+    _CarouselSlide(Icons.verified_user, "Verified Experts", "All technicians are background-checked and certified.", "Trusted"),
+    _CarouselSlide(Icons.schedule, "Same Day Service", "Book now and get help as soon as today.", "Fast"),
+    _CarouselSlide(Icons.local_offer, "Special Offers", "Exclusive discounts for first-time customers.", "Deals"),
+    _CarouselSlide(Icons.home_repair_service, "Full Home Services", "From plumbing to painting—we do it all.", "Complete"),
+    _CarouselSlide(Icons.thumb_up, "100% Satisfaction", "Not happy? We'll make it right, guaranteed.", "Guarantee"),
+  ];
 
   static const List<_ServiceItem> _services = [
     _ServiceItem(Icons.build, "Plumber", "Leaky pipes, clogged drains."),
@@ -33,7 +48,29 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _startCarouselTimer();
+  }
+
+  void _startCarouselTimer() {
+    _carouselTimer = Timer.periodic(const Duration(seconds: 2), (_) {
+      if (_carouselController.hasClients) {
+        final page = _carouselController.page ?? 0;
+        final next = (page.round() + 1) % _carouselSlides.length;
+        _carouselController.animateToPage(
+          next,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
+
+  @override
   void dispose() {
+    _carouselTimer?.cancel();
+    _carouselController.dispose();
     _searchController.dispose();
     _searchFocusNode.dispose();
     super.dispose();
@@ -190,47 +227,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 24),
 
-                    // Carousel (dummy content)
+                    // Carousel (auto-play, 2 sec per slide)
                     SizedBox(
                       height: 180,
-                      child: PageView(
-                        children: [
-                          _buildCarouselCard(
-                            icon: Icons.bolt,
-                            title: "Emergency Support",
-                            subtitle: "Need urgent help? Get a professional at your door in one tap.",
-                            badge: "24/7",
-                          ),
-                          _buildCarouselCard(
-                            icon: Icons.star,
-                            title: "Top Rated Pros",
-                            subtitle: "Book verified experts with 4.8+ ratings.",
-                            badge: "Popular",
-                          ),
-                          _buildCarouselCard(
-                            icon: Icons.savings,
-                            title: "Best Prices",
-                            subtitle: "Transparent pricing with no hidden fees.",
-                            badge: "Save",
-                          ),
-                        ],
+                      child: PageView.builder(
+                        controller: _carouselController,
+                        itemCount: _carouselSlides.length,
+                        itemBuilder: (context, index) {
+                          final slide = _carouselSlides[index];
+                          return _buildCarouselCard(
+                            icon: slide.icon,
+                            title: slide.title,
+                            subtitle: slide.subtitle,
+                            badge: slide.badge,
+                          );
+                        },
                       ),
                     ),
                     const SizedBox(height: 12),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        3,
-                        (i) => Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 4),
-                          width: 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: i == 0 ? const Color(0xFF2563EB) : Colors.grey.shade300,
-                          ),
-                        ),
-                      ),
+                    _CarouselIndicators(
+                      pageController: _carouselController,
+                      itemCount: _carouselSlides.length,
                     ),
                     const SizedBox(height: 28),
 
@@ -353,6 +370,72 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Icon(icon, size: 48, color: const Color(0xFF2563EB)),
         ],
+      ),
+    );
+  }
+}
+
+class _CarouselSlide {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final String badge;
+
+  const _CarouselSlide(this.icon, this.title, this.subtitle, this.badge);
+}
+
+class _CarouselIndicators extends StatefulWidget {
+  final PageController pageController;
+  final int itemCount;
+
+  const _CarouselIndicators({
+    required this.pageController,
+    required this.itemCount,
+  });
+
+  @override
+  State<_CarouselIndicators> createState() => _CarouselIndicatorsState();
+}
+
+class _CarouselIndicatorsState extends State<_CarouselIndicators> {
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.pageController.addListener(_onPageChanged);
+  }
+
+  @override
+  void dispose() {
+    widget.pageController.removeListener(_onPageChanged);
+    super.dispose();
+  }
+
+  void _onPageChanged() {
+    if (widget.pageController.hasClients) {
+      final page = widget.pageController.page?.round() ?? 0;
+      if (page != _currentPage) {
+        setState(() => _currentPage = page);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        widget.itemCount,
+        (i) => Container(
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: i == _currentPage ? const Color(0xFF2563EB) : Colors.grey.shade300,
+          ),
+        ),
       ),
     );
   }
