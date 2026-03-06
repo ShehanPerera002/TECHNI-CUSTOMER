@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import '../core/assets.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
 
   static const List<_ServiceItem> _services = [
     _ServiceItem(Icons.build, "Plumber", "Leaky pipes, clogged drains."),
@@ -13,6 +21,23 @@ class HomeScreen extends StatelessWidget {
     _ServiceItem(Icons.ac_unit, "AC Technician", "Cooling, heating, service."),
     _ServiceItem(Icons.security, "ELV Repairer", "Security, CCTV, low voltage."),
   ];
+
+  List<_ServiceItem> get _filteredServices {
+    final query = _searchController.text.trim().toLowerCase();
+    if (query.isEmpty) return [];
+    return _services
+        .where((s) =>
+            s.title.toLowerCase().contains(query) ||
+            s.description.toLowerCase().contains(query))
+        .toList();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _searchFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,23 +82,111 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
 
-                    // Search Box
-                    Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.grey.shade300),
-                      ),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: "Search for a service...",
-                          hintStyle: TextStyle(color: Colors.grey.shade600),
-                          prefixIcon: Icon(Icons.search, color: Colors.grey.shade600),
-                          border: InputBorder.none,
-                          contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                    // Search Box + Dropdown Results
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.grey.shade300),
+                          ),
+                          child: TextField(
+                            controller: _searchController,
+                            focusNode: _searchFocusNode,
+                            onChanged: (_) => setState(() {}),
+                            decoration: InputDecoration(
+                              hintText: "Search for a service...",
+                              hintStyle: TextStyle(color: Colors.grey.shade600),
+                              prefixIcon: Icon(Icons.search, color: Colors.grey.shade600),
+                              border: InputBorder.none,
+                              contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                            ),
+                          ),
                         ),
-                      ),
+                        if (_searchController.text.trim().isNotEmpty) ...[
+                          const SizedBox(height: 8),
+                          Material(
+                            elevation: 4,
+                            borderRadius: BorderRadius.circular(12),
+                            child: Container(
+                              constraints: const BoxConstraints(maxHeight: 220),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: Colors.grey.shade200),
+                              ),
+                              child: _filteredServices.isEmpty
+                                  ? const Padding(
+                                      padding: EdgeInsets.all(24),
+                                      child: Center(
+                                        child: Text(
+                                          "No results found",
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.black54,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : ListView.builder(
+                                      shrinkWrap: true,
+                                      padding: EdgeInsets.zero,
+                                      itemCount: _filteredServices.length,
+                                      itemBuilder: (context, index) {
+                                        final item = _filteredServices[index];
+                                        return InkWell(
+                                          onTap: () {
+                                            _searchController.clear();
+                                            _searchFocusNode.unfocus();
+                                            setState(() {});
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 16,
+                                              vertical: 12,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  item.icon,
+                                                  size: 24,
+                                                  color: const Color(0xFF2563EB),
+                                                ),
+                                                const SizedBox(width: 12),
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        item.title,
+                                                        style: const TextStyle(
+                                                          fontWeight: FontWeight.w600,
+                                                          fontSize: 14,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        item.description,
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                          color: Colors.grey.shade600,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
                     const SizedBox(height: 24),
 
