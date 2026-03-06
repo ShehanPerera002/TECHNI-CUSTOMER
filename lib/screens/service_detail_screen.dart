@@ -1,14 +1,90 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
 import '../core/assets.dart';
 import '../models/service_detail_data.dart';
 import '../widgets/primary_button.dart';
 
 /// Reusable service detail page. Pass [service] with dynamic content
 /// (title, description, pricing, CTA text).
-class ServiceDetailScreen extends StatelessWidget {
+class ServiceDetailScreen extends StatefulWidget {
   final ServiceDetailData service;
 
   const ServiceDetailScreen({super.key, required this.service});
+
+  @override
+  State<ServiceDetailScreen> createState() => _ServiceDetailScreenState();
+}
+
+class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
+  final TextEditingController _issueController = TextEditingController();
+  bool _hasVoiceRecording = false;
+  File? _selectedImage;
+
+  ServiceDetailData get service => widget.service;
+
+  bool get _isFormValid =>
+      _issueController.text.trim().isNotEmpty ||
+      _hasVoiceRecording ||
+      _selectedImage != null;
+
+  @override
+  void initState() {
+    super.initState();
+    _issueController.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _issueController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() => _selectedImage = File(image.path));
+    }
+  }
+
+  void _showVoiceRecordingPlaceholder() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.mic, size: 48, color: Colors.grey.shade600),
+            const SizedBox(height: 16),
+            Text(
+              "Voice recording placeholder",
+              style: TextStyle(color: Colors.grey.shade700),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              "Tap Done to add your voice note.",
+              style: TextStyle(fontSize: 12, color: Colors.black54),
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() => _hasVoiceRecording = true);
+                  Navigator.pop(context);
+                },
+                child: const Text("Done"),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +148,28 @@ class ServiceDetailScreen extends StatelessWidget {
             const SizedBox(height: 32),
             PrimaryButton(
               text: service.ctaText,
-              onPressed: () {},
+              onPressed: _isFormValid ? () {} : null,
             ),
+            if (!_isFormValid) ...[
+              const SizedBox(height: 12),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Colors.amber.shade50,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.amber.shade200),
+                ),
+                child: Text(
+                  "Please describe your issue and click the find button",
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.amber.shade900,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
             const SizedBox(height: 40),
           ],
         ),
@@ -105,6 +201,7 @@ class ServiceDetailScreen extends StatelessWidget {
         children: [
           Expanded(
             child: TextField(
+              controller: _issueController,
               decoration: InputDecoration(
                 hintText: "Describe your issue...",
                 hintStyle: TextStyle(color: Colors.grey.shade600),
@@ -114,12 +211,22 @@ class ServiceDetailScreen extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.mic, color: Colors.grey.shade600),
-            onPressed: () {},
+            icon: Icon(
+              Icons.mic,
+              color: _hasVoiceRecording
+                  ? const Color(0xFF2563EB)
+                  : Colors.grey.shade600,
+            ),
+            onPressed: _showVoiceRecordingPlaceholder,
           ),
           IconButton(
-            icon: Icon(Icons.camera_alt, color: Colors.grey.shade600),
-            onPressed: () {},
+            icon: Icon(
+              Icons.camera_alt,
+              color: _selectedImage != null
+                  ? const Color(0xFF2563EB)
+                  : Colors.grey.shade600,
+            ),
+            onPressed: _pickImage,
           ),
         ],
       ),
