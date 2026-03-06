@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:technni_customer/screens/success_screen.dart';
 import '../core/assets.dart';
+import '../widgets/techni_logo.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key});
@@ -61,7 +62,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
     _checkOtpComplete();
   }
 
-  void _verifyOtp() {
+  void _continueToNext() {
     if (!_isOtpComplete) return;
 
     Navigator.pushReplacement(
@@ -82,7 +83,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
             children: [
               const SizedBox(height: 20),
 
-              Image.asset(AppAssets.welcomeLogo, height: 28),
+              const TechniLogo(),
 
               const SizedBox(height: 40),
 
@@ -169,7 +170,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               const Spacer(),
 
               GestureDetector(
-                onTap: _isOtpComplete ? _verifyOtp : null,
+                onTap: _isOtpComplete ? _continueToNext : null,
                 child: Container(
                   width: double.infinity,
                   height: 55,
@@ -184,7 +185,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   ),
                   child: const Center(
                     child: Text(
-                      "Verify",
+                      "Continue",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
