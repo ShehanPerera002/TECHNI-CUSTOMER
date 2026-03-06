@@ -7,7 +7,7 @@ class ServiceSearchSection extends StatelessWidget {
   final FocusNode focusNode;
   final List<ServiceItem> filteredServices;
   final VoidCallback onChanged;
-  final VoidCallback onServiceSelected;
+  final void Function(ServiceItem item)? onServiceSelected;
 
   const ServiceSearchSection({
     super.key,
@@ -15,7 +15,7 @@ class ServiceSearchSection extends StatelessWidget {
     required this.focusNode,
     required this.filteredServices,
     required this.onChanged,
-    required this.onServiceSelected,
+    this.onServiceSelected,
   });
 
   @override
@@ -88,7 +88,7 @@ class ServiceSearchSection extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final item = filteredServices[index];
                   return InkWell(
-                    onTap: onServiceSelected,
+                    onTap: () => onServiceSelected?.call(item),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,

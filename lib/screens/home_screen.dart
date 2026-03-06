@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import '../core/assets.dart';
+import '../models/service_detail_data.dart';
 import '../widgets/carousel_indicators.dart';
 import '../widgets/carousel_slide_card.dart';
 import '../widgets/service_card.dart';
 import '../widgets/service_search_section.dart';
+import 'service_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -43,20 +45,101 @@ class _HomeScreenState extends State<HomeScreen> {
         "Not happy? We'll make it right, guaranteed.", "Guarantee"),
   ];
 
-  static const List<ServiceItem> _services = [
-    ServiceItem(Icons.build, "Plumber", "Leaky pipes, clogged drains."),
-    ServiceItem(Icons.electrical_services, "Electrician",
-        "Wiring, outlets, lighting."),
-    ServiceItem(Icons.grass, "Gardener", "Lawn care, landscaping."),
-    ServiceItem(Icons.handyman, "Carpenter", "Furniture, repairs, installs."),
-    ServiceItem(Icons.format_paint, "Painter", "Interior and Exterior."),
-    ServiceItem(Icons.ac_unit, "AC Technician",
-        "Cooling, heating, service."),
-    ServiceItem(Icons.security, "ELV Repairer",
-        "Security, CCTV, low voltage."),
+  static const List<ServiceDetailData> _services = [
+    ServiceDetailData(
+      icon: Icons.build,
+      title: "Plumber",
+      description: "Leaky pipes, clogged drains.",
+      pageTitle: "Plumbing Services",
+      serviceTitle: "Expert Plumbing Solutions",
+      fullDescription:
+          "For fixing leaky faucets, clogged drains, toilet repairs, and water heater issues. Our certified plumbers are ready to tackle any problem, big or small, ensuring your place's plumbing runs smoothly.",
+      inspectionFee: "Rs 400",
+      hourlyRate: "Rs 200 / hr",
+      materials: "At Cost",
+      ctaText: "Find a Plumber",
+    ),
+    ServiceDetailData(
+      icon: Icons.electrical_services,
+      title: "Electrician",
+      description: "Wiring, outlets, lighting.",
+      pageTitle: "Electrical Services",
+      serviceTitle: "Professional Electrical Solutions",
+      fullDescription:
+          "From wiring and outlets to lighting installations and electrical repairs. Our licensed electricians ensure safe, reliable power throughout your home or business.",
+      inspectionFee: "Rs 500",
+      hourlyRate: "Rs 250 / hr",
+      materials: "At Cost",
+      ctaText: "Find an Electrician",
+    ),
+    ServiceDetailData(
+      icon: Icons.grass,
+      title: "Gardener",
+      description: "Lawn care, landscaping.",
+      pageTitle: "Gardening Services",
+      serviceTitle: "Expert Lawn & Landscaping",
+      fullDescription:
+          "Lawn care, landscaping, pruning, and garden maintenance. Keep your outdoor space beautiful and well-maintained with our experienced gardeners.",
+      inspectionFee: "Rs 350",
+      hourlyRate: "Rs 180 / hr",
+      materials: "At Cost",
+      ctaText: "Find a Gardener",
+    ),
+    ServiceDetailData(
+      icon: Icons.handyman,
+      title: "Carpenter",
+      description: "Furniture, repairs, installs.",
+      pageTitle: "Carpentry Services",
+      serviceTitle: "Skilled Carpentry & Repairs",
+      fullDescription:
+          "Furniture repairs, installations, custom woodwork, and general carpentry. Our craftsmen bring quality and precision to every project.",
+      inspectionFee: "Rs 450",
+      hourlyRate: "Rs 220 / hr",
+      materials: "At Cost",
+      ctaText: "Find a Carpenter",
+    ),
+    ServiceDetailData(
+      icon: Icons.format_paint,
+      title: "Painter",
+      description: "Interior and Exterior.",
+      pageTitle: "Painting Services",
+      serviceTitle: "Interior & Exterior Painting",
+      fullDescription:
+          "Transform your space with professional interior and exterior painting. From touch-ups to full repaints, we deliver a flawless finish.",
+      inspectionFee: "Rs 400",
+      hourlyRate: "Rs 200 / hr",
+      materials: "At Cost",
+      ctaText: "Find a Painter",
+    ),
+    ServiceDetailData(
+      icon: Icons.ac_unit,
+      title: "AC Technician",
+      description: "Cooling, heating, service.",
+      pageTitle: "AC Services",
+      serviceTitle: "AC Repair & Maintenance",
+      fullDescription:
+          "Cooling, heating, and full AC service. Our technicians handle installations, repairs, and regular maintenance to keep you comfortable year-round.",
+      inspectionFee: "Rs 500",
+      hourlyRate: "Rs 250 / hr",
+      materials: "At Cost",
+      ctaText: "Find an AC Technician",
+    ),
+    ServiceDetailData(
+      icon: Icons.security,
+      title: "ELV Repairer",
+      description: "Security, CCTV, low voltage.",
+      pageTitle: "ELV Services",
+      serviceTitle: "Security & Low Voltage Solutions",
+      fullDescription:
+          "Security systems, CCTV installation, and low voltage repairs. Keep your property secure with our expert ELV technicians.",
+      inspectionFee: "Rs 550",
+      hourlyRate: "Rs 280 / hr",
+      materials: "At Cost",
+      ctaText: "Find an ELV Repairer",
+    ),
   ];
 
-  List<ServiceItem> get _filteredServices {
+  List<ServiceDetailData> get _filteredServices {
     final query = _searchController.text.trim().toLowerCase();
     if (query.isEmpty) return [];
     return _services
@@ -101,6 +184,18 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {});
   }
 
+  void _onServiceSelected(ServiceItem item) {
+    if (item is ServiceDetailData) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ServiceDetailScreen(service: item),
+        ),
+      );
+    }
+    _clearSearchAndClose();
+  }
+
   @override
   void dispose() {
     _scrollController.removeListener(_onScroll);
@@ -143,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           focusNode: _searchFocusNode,
                           filteredServices: _filteredServices,
                           onChanged: () => setState(() {}),
-                          onServiceSelected: _clearSearchAndClose,
+                          onServiceSelected: _onServiceSelected,
                         ),
                         const SizedBox(height: 24),
                         _buildCarousel(),
@@ -216,7 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
           focusNode: _searchFocusNode,
           filteredServices: _filteredServices,
           onChanged: () => setState(() {}),
-          onServiceSelected: _clearSearchAndClose,
+          onServiceSelected: _onServiceSelected,
         ),
       ),
     );
@@ -291,6 +386,12 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: item.icon,
               title: item.title,
               description: item.description,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ServiceDetailScreen(service: item),
+                ),
+              ),
             );
           },
         ),
