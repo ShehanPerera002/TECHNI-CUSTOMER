@@ -7,47 +7,40 @@ class AIWelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-    //App bar with title 
-    appBar: AppBar(
-      title: const Text("AI Assistant"), // Title
-    ),
-
-    // Main content of the AI welcome screen 
-    body: Center(
-      // Center the columnn both vertically and horizontally
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center, // Center content vertically
-        Children: [
-          //Robot Icon represent the AI assistant
-          const Icon(
-            Icons.smart_toy,
-            size: 100,
-            color: Colors.blue,
-          ),
-
-          const SizedBox(height: 20), // Space between icon and text
-
-          //Welcome message 
-          const Text (
-            "Hello! I'm your AI Assistant",
-            style: TextStyle(fontSize: 20), // Larger font size
-
-          ),
-
-          const SideBox(height: 20); //Space before the button
-
-          // Button to start chat 
-          ElevatedButton(
-            onPressed: () {
-              //Navigate the chat screen when pressed
-              Navigator.pusheNamed (context, '/chat');
-            },
-            child const Text ("Start chat"),
-          )
-        ],
+      //App bar with title
+      appBar: AppBar(
+        title: const Text("AI Assistant"), // Title
       ),
-    ),
+
+      // Main content of the AI welcome screen
+      body: Center(
+        // Center the columnn both vertically and horizontally
+        child: Column(
+          mainAxisAlignment:
+              MainAxisAlignment.center, // Center content vertically
+          children: [
+            //Robot Icon represent the AI assistant
+            const Icon(Icons.smart_toy, size: 100, color: Colors.blue),
+
+            const SizedBox(height: 20), // Space between icon and text
+            // Welcome message
+            const Text(
+              "Hello! I'm your AI Assistant",
+              style: TextStyle(fontSize: 20), // Larger font size
+            ),
+
+            const SizedBox(height: 20), // Space before the button
+            // Button to start chat
+            ElevatedButton(
+              onPressed: () {
+                // Navigate the chat screen when pressed
+                Navigator.pushNamed(context, '/chat');
+              },
+              child: const Text("Start chat"),
+            ),
+          ],
+        ),
+      ),
     );
-    
+  }
 }
