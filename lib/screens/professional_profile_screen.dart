@@ -237,12 +237,11 @@ class _ProfessionalProfileScreenState extends State<ProfessionalProfileScreen> {
 
   Widget _buildPersonalDetails(ProfessionalProfileData profile) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _detailRow(Icons.location_on, 'From', profile.from),
-        const SizedBox(height: 10),
+        const SizedBox(height: 12),
         _detailRow(Icons.school, 'Qualifications', profile.qualifications),
-        const SizedBox(height: 10),
+        const SizedBox(height: 12),
         _detailRow(Icons.schedule, 'Avg. Response Time', profile.avgResponseTime),
       ],
     );
@@ -255,21 +254,25 @@ class _ProfessionalProfileScreenState extends State<ProfessionalProfileScreen> {
         Icon(icon, size: 20, color: Colors.grey.shade600),
         const SizedBox(width: 10),
         Expanded(
-          child: RichText(
-            text: TextSpan(
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey.shade800,
-                height: 1.4,
-              ),
-              children: [
-                TextSpan(
-                  text: '$label: ',
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-                TextSpan(text: value),
-              ],
+          flex: 2,
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey.shade800,
             ),
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: Text(
+            value,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey.shade700,
+            ),
+            textAlign: TextAlign.end,
           ),
         ),
       ],
