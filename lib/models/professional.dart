@@ -19,6 +19,20 @@ class Professional {
     required this.avatarUrl,
   });
 
+  Professional copyWith({
+    LatLng? location,
+    String? timeToBook,
+  }) {
+    return Professional(
+      id: id,
+      name: name,
+      rating: rating,
+      timeToBook: timeToBook ?? this.timeToBook,
+      location: location ?? this.location,
+      avatarUrl: avatarUrl,
+    );
+  }
+
   static List<Professional> getDummyPlumbers() {
     const center = LatLng(6.9271, 79.8612); // Colombo - user location
     const d = 0.004; // ~450m spacing so avatars spread across the map
