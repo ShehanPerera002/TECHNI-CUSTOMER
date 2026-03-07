@@ -147,16 +147,20 @@ class _ProfessionalProfileScreenState extends State<ProfessionalProfileScreen> {
           children: [
             Expanded(
               child: SizedBox(
-                height: 48,
+                height: 36,
                 child: FilledButton.icon(
                   onPressed: () {},
-                  icon: const Icon(Icons.phone, size: 18),
-                  label: const Text('Connect Now'),
+                  icon: const Icon(Icons.phone, size: 14),
+                  label: const Text(
+                    'Connect Now',
+                    style: TextStyle(fontSize: 12),
+                  ),
                   style: FilledButton.styleFrom(
                     backgroundColor: const Color(0xFF2563EB),
                     foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
+                        borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
               ),
@@ -164,16 +168,20 @@ class _ProfessionalProfileScreenState extends State<ProfessionalProfileScreen> {
             const SizedBox(width: 12),
             Expanded(
               child: SizedBox(
-                height: 48,
+                height: 36,
                 child: OutlinedButton.icon(
                   onPressed: () {},
-                  icon: const Icon(Icons.calendar_today, size: 18),
-                  label: const Text('Schedule'),
+                  icon: const Icon(Icons.calendar_today, size: 14),
+                  label: const Text(
+                    'Schedule',
+                    style: TextStyle(fontSize: 12),
+                  ),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.black87,
                     side: const BorderSide(color: Colors.black87),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
+                        borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
               ),
