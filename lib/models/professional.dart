@@ -7,7 +7,7 @@ class Professional {
   final double rating;
   final String timeToBook;
   final LatLng location;
-  /// Avatar URL - uses ui-avatars.com for dummy images.
+  /// Avatar URL - uses randomuser.me for male/female face portraits.
   final String avatarUrl;
 
   const Professional({
@@ -28,7 +28,7 @@ class Professional {
         rating: 4.9,
         timeToBook: '15 min',
         location: LatLng(center.latitude + 0.002, center.longitude + 0.001),
-        avatarUrl: 'https://ui-avatars.com/api/?name=Saman+Perera&size=80&background=2563EB&color=fff',
+        avatarUrl: 'https://randomuser.me/api/portraits/men/11.jpg',
       ),
       Professional(
         id: '2',
@@ -36,7 +36,7 @@ class Professional {
         rating: 4.8,
         timeToBook: '30 min',
         location: LatLng(center.latitude - 0.0015, center.longitude + 0.002),
-        avatarUrl: 'https://ui-avatars.com/api/?name=Sunil+Santha&size=80&background=059669&color=fff',
+        avatarUrl: 'https://randomuser.me/api/portraits/men/22.jpg',
       ),
       Professional(
         id: '3',
@@ -44,7 +44,7 @@ class Professional {
         rating: 4.5,
         timeToBook: '45 min',
         location: LatLng(center.latitude + 0.001, center.longitude - 0.0015),
-        avatarUrl: 'https://ui-avatars.com/api/?name=Kamala+Silva&size=80&background=7C3AED&color=fff',
+        avatarUrl: 'https://randomuser.me/api/portraits/women/11.jpg',
       ),
       Professional(
         id: '4',
@@ -52,7 +52,7 @@ class Professional {
         rating: 4.7,
         timeToBook: '20 min',
         location: LatLng(center.latitude - 0.002, center.longitude),
-        avatarUrl: 'https://ui-avatars.com/api/?name=Rohan+Fernando&size=80&background=DC2626&color=fff',
+        avatarUrl: 'https://randomuser.me/api/portraits/men/33.jpg',
       ),
       Professional(
         id: '5',
@@ -60,7 +60,7 @@ class Professional {
         rating: 4.6,
         timeToBook: '25 min',
         location: LatLng(center.latitude + 0.0015, center.longitude + 0.0025),
-        avatarUrl: 'https://ui-avatars.com/api/?name=Nimal+Jayawardena&size=80&background=EA580C&color=fff',
+        avatarUrl: 'https://randomuser.me/api/portraits/men/44.jpg',
       ),
     ];
   }
