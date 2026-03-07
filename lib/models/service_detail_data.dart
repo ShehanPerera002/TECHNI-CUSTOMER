@@ -13,6 +13,10 @@ class ServiceDetailData extends ServiceItem {
   final String hourlyRate;
   final String materials;
   final String ctaText;
+  /// Hint text for the issue description field.
+  final String issueHint;
+  /// Example/common issues user can tap to quickly describe their problem.
+  final List<String> exampleIssues;
 
   const ServiceDetailData({
     required IconData icon,
@@ -26,5 +30,7 @@ class ServiceDetailData extends ServiceItem {
     required this.hourlyRate,
     required this.materials,
     required this.ctaText,
+    required this.issueHint,
+    this.exampleIssues = const [],
   }) : super(icon, title, description);
 }
