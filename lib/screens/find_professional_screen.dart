@@ -255,7 +255,8 @@ class _FindProfessionalScreenState extends State<FindProfessionalScreen> {
               ),
               const SizedBox(height: 16),
               SizedBox(
-                height: 44,
+                height: 46,
+                width: double.infinity,
                 child: FilledButton.icon(
                   onPressed: _selectedProfessional != null
                       ? () {
@@ -263,12 +264,17 @@ class _FindProfessionalScreenState extends State<FindProfessionalScreen> {
                         }
                       : null,
                   icon: const Icon(Icons.person_outline, size: 18),
-                  label: const Text('Check Profile'),
+                  label: const Text(
+                    'Check Profile',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  ),
                   style: FilledButton.styleFrom(
-                    backgroundColor: const Color(0xFFEAB308),
-                    foregroundColor: Colors.black87,
+                    backgroundColor: _selectedProfessional != null ? const Color(0xFFFBBF24) : Colors.grey.shade300,
+                    foregroundColor: _selectedProfessional != null ? Colors.black87 : Colors.grey.shade600,
                     disabledBackgroundColor: Colors.grey.shade300,
                     disabledForegroundColor: Colors.grey.shade600,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
                 ),
               ),
@@ -300,31 +306,44 @@ class _FindProfessionalScreenState extends State<FindProfessionalScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: FilledButton.icon(
-                      onPressed: () {
-                        // TODO: Connect now
-                      },
-                      icon: const Icon(Icons.phone, size: 18),
-                      label: const Text('Connect Now'),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: const Color(0xFF2563EB),
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: SizedBox(
+                      height: 48,
+                      child: FilledButton.icon(
+                        onPressed: () {
+                          // TODO: Connect now
+                        },
+                        icon: const Icon(Icons.phone, size: 18),
+                        label: const Text(
+                          'Connect Now',
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                        ),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: const Color(0xFF2563EB),
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
                       ),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: () {
-                        // TODO: Schedule
-                      },
-                      icon: const Icon(Icons.calendar_today, size: 18),
-                      label: const Text('Schedule'),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.black87,
-                        side: const BorderSide(color: Colors.black87),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: SizedBox(
+                      height: 48,
+                      child: OutlinedButton.icon(
+                        onPressed: () {
+                          // TODO: Schedule
+                        },
+                        icon: const Icon(Icons.calendar_today, size: 18),
+                        label: const Text(
+                          'Schedule',
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.grey.shade800,
+                          side: BorderSide(color: Colors.grey.shade400),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
                       ),
                     ),
                   ),
