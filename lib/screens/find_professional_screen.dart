@@ -135,7 +135,6 @@ class _FindProfessionalScreenState extends State<FindProfessionalScreen> {
                           height: 40,
                           errorBuilder: (context, error, stackTrace) => Container(
                             color: Colors.grey.shade300,
-                            child: const Icon(Icons.person),
                           ),
                         ),
                       ),
@@ -216,7 +215,6 @@ class _FindProfessionalScreenState extends State<FindProfessionalScreen> {
                               radius: 22,
                               backgroundImage: NetworkImage(p.avatarUrl),
                               onBackgroundImageError: (object, stackTrace) {},
-                              child: const Icon(Icons.person, size: 20, color: Colors.grey),
                             ),
                             const SizedBox(height: 4),
                             Text(
