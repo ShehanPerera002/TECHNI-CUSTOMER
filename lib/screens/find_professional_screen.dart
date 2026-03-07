@@ -344,25 +344,27 @@ class _FindProfessionalScreenState extends State<FindProfessionalScreen> {
     required ValueChanged<String?> onChanged,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.grey.shade300),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: value,
           isExpanded: true,
-          icon: const Icon(Icons.keyboard_arrow_down),
+          isDense: true,
+          icon: const Icon(Icons.keyboard_arrow_down, size: 20),
           items: items
               .map((e) => DropdownMenuItem(
                     value: e,
                     child: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(icon, size: 18, color: Colors.grey.shade700),
-                        const SizedBox(width: 8),
-                        Text(e, style: const TextStyle(fontSize: 14)),
+                        Icon(icon, size: 14, color: Colors.grey.shade700),
+                        const SizedBox(width: 6),
+                        Text(e, style: const TextStyle(fontSize: 12)),
                       ],
                     ),
                   ))
