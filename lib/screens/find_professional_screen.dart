@@ -78,7 +78,7 @@ class _FindProfessionalScreenState extends State<FindProfessionalScreen> {
       ),
       children: [
         TileLayer(
-          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+          urlTemplate: 'https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
         ),
         MarkerLayer(
           markers: [
