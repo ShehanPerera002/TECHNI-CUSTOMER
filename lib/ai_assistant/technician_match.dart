@@ -7,17 +7,13 @@ class TechnicianMatchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar
-      (title: const Text("Technician Match")
-      ),
+      appBar: AppBar(title: const Text("Technician Match")),
 
       body: Padding(
         padding: const EdgeInsets.all(20),
 
         child: Column(
-
           children: [
-
             //Technician card
             Card(
               elevation: 3,
@@ -33,7 +29,7 @@ class TechnicianMatchScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-            Card (
+            Card(
               elevation: 3,
               child: ListTile(
                 leading: const Icon(Icons.person),
@@ -44,3 +40,10 @@ class TechnicianMatchScreen extends StatelessWidget {
                   child: const Text("Contact"),
                 ),
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
