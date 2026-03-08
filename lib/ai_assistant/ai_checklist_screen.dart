@@ -7,9 +7,7 @@ class AiChecklistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Safety Checklist")
-        ),
+      appBar: AppBar(title: const Text("Safety Checklist")),
 
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -17,14 +15,10 @@ class AiChecklistScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-           
             const Text(
               "Please check the following",
-              style: TextStyle(
-                fontSize: 22, 
-                fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-
 
             const SizedBox(height: 20),
 
@@ -47,5 +41,11 @@ class AiChecklistScreen extends StatelessWidget {
                   Navigator.pushNamed(context, "/technician");
                 },
                 child: const Text("View Recommended Technicians"),
-            )
+              ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
